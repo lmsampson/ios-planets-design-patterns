@@ -10,11 +10,23 @@ import UIKit
 
 class PlanetsCollectionViewController: UICollectionViewController, UIPopoverPresentationControllerDelegate {
     
-    @IBAction func unwindToPlanetsCollectionViewController(_ sender: UIStoryboardSegue) {
+    @IBAction func unwindToPlanetsCollectionViewController(_ sender: UIStoryboardSegue) {}
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        let nc = NotificationCenter.default
+        nc.addObserver(self, selector: #selector(shouldShowPlutoChanged(_:)), name: .shouldShowPlutoChanged, object: nil)
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        collectionView?.reloadData()
+    }
+    
+    // MARK: - Notifications
+    
+    @objc func shouldShowPlutoChanged(_ notification: Notification) {
         collectionView?.reloadData()
     }
     
